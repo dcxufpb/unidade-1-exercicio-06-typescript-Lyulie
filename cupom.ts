@@ -13,9 +13,57 @@ let dados = {
   inscricao_estadual: "244.898.500.113"
 };
 
-function dados_loja() {
-  // Implemente aqui
-  return "";
+const dados_loja = () : string => {
+  if (!dados.nome_loja) {
+    throw new Error(`O campo nome da loja é obrigatório`);
+  }
+
+  if(!dados.logradouro) {
+    throw new Error("O campo logradouro do endereço é obrigatório")
+  }
+
+  const _logradouro : string = dados.logradouro + ", "
+  const _numero : string = dados.numero? `${dados.numero}` : "s/n"
+  const _complemento : string = dados.complemento? " " + dados.complemento : ""
+  const _bairro : string = dados.bairro? dados.bairro + " - " : ""
+
+  if(!dados.municipio) {
+    throw new Error("O campo município do endereço é obrigatório")
+  }
+
+  const _municipio = dados.municipio + " - "
+  
+  if(!dados.estado) {
+    throw new Error("O campo estado do endereço é obrigatório")
+  }
+
+  const _cep : string = dados.cep? `CEP:${dados.cep}` : ""
+  let _telefone : string = dados.telefone? `Tel ${dados.telefone}` : ""
+  _telefone = _cep && _telefone? " " + _telefone : _telefone
+  const _observacao : string = dados.observacao? dados.observacao : ""
+
+  if(!dados.cnpj) {
+    throw new Error("O campo CNPJ da loja é obrigatório")
+  }
+
+  const _cnpj : string = `CNPJ: ${dados.cnpj}`
+  
+  if(!dados.inscricao_estadual) {
+    throw new Error("O campo inscrição estadual da loja é obrigatório")
+  }
+
+  const _inscricao_estadual : string = `IE: ${dados.inscricao_estadual}`
+
+  return (
+`${dados.nome_loja}
+${_logradouro}${_numero}${_complemento}
+${_bairro}${_municipio}${dados.estado}
+${_cep}${_telefone}
+${_observacao}
+${_cnpj}
+${_inscricao_estadual}
+`
+  );
 }
 
 module.exports = {
